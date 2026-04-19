@@ -1,0 +1,30 @@
+@import "tailwindcss";
+body {
+    margin: 0;
+    padding: 0;
+}
+/* Hide scrollbar but keep scroll */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    /* IE & Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #74c491;
+    /* green-500 */
+    border-radius: 10px;
+}
