@@ -1,10 +1,10 @@
 import connectDb from "@/app/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import User from "@/app/models/user.model";
 import Order from "@/app/models/order.model";
 import { auth } from "@/auth";
 
-export async function GET(){
+export async function GET(req: NextRequest){
   await connectDb()
   try {
     const session= await auth();

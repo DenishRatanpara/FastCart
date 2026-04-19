@@ -3,9 +3,9 @@ import Order from "@/app/models/order.model";
 import User from "@/app/models/user.model";
 import Grocery from "@/app/models/grocery.model";
 import { auth } from "@/auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     await connectDb();
     const session = await auth();
