@@ -3,6 +3,7 @@ services:
   - type: web
     name: fastcart-frontend
     env: node
+    plan: free
     rootDir: fastcart
     buildCommand: npm install && npm run build
     startCommand: npm start
@@ -35,6 +36,7 @@ services:
   - type: web
     name: fastcart-socket
     env: node
+    plan: free
     rootDir: socketServer
     buildCommand: npm install
     startCommand: npm start
