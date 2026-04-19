@@ -70,16 +70,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return true;
     },
     async jwt({ token, user, account, trigger, session }) {
+      if (account?.provider === "google" && user?.email) {
+        try {
+          await connectDb();
+          const dbUser = await User.findOne({ email: user.email });
 
-  if (account?.provider === "google" && user?.email) {
-    await connectDb()
-    const dbUser = await User.findOne({ email: user.email })
-
-    token.id = dbUser._id.toString()
-    token.name = dbUser.name
-    token.email = dbUser.email
-    token.role = dbUser.role
-  }
+          if (dbUser) {
+            token.id = dbUser._id.toString();
+            token.name = dbUser.name;
+            token.email = dbUser.email;
+            token.role = dbUser.role;
+          } else {
+            console.warn("WARN: Google user authenticated but not found in DB during JWT callback.");
+          }
+        } catch (error) {
+          console.error("ERROR: Database error in Google JWT callback:", error);
+        }
+      }
 
   if (account?.provider === "credentials" && user) {
     token.id = user.id
