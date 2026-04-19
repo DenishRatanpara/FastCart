@@ -1,23 +1,27 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, User, Mail, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 
 
 
 const Login = () => {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
-  const [Loading,setLoading]=useState(false);
-  const router=useRouter();
-const { data: session, status } = useSession();
+  const [Loading, setLoading] = useState(false);
+  const router = useRouter();
+  const { data: session, status } = useSession();
 
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/");
+    }
+  }, [status, router]);
 
 
 

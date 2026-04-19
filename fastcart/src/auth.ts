@@ -103,15 +103,30 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   return token
 },
 
-    session({session,token}){
-        if(session.user){
-            session.user.id=token.id as string,
-            session.user.name=token.name  as string,
-            session.user.email=token.email as string,
-            session.user.role=token.role as string
-        }
-        return session
-    }
+    session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+        session.user.name = token.name as string;
+        session.user.email = token.email as string;
+        session.user.role = token.role as string;
+      }
+      return session;
+    },
+    async redirect({ url, baseUrl }) {
+      // If we are in production and the URL contains localhost or 10000, force it to the baseURL
+      if (url.includes("localhost") || url.includes("10000")) {
+        return baseUrl;
+      }
+      // Allows relative callback URLs
+      if (url.startsWith("/")) {
+        return `${baseUrl}${url}`;
+      }
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) {
+        return url;
+      }
+      return baseUrl;
+    },
   },
   pages:{
     signIn:"/login",
