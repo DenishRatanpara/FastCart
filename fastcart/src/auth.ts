@@ -47,23 +47,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     })
   ],
   callbacks:{
-    async signIn({user,account}){
-      if(account?.provider=="google"){
-        await connectDb()
-        let dbUser= await User.findOne({email:user.email})
-        if(!dbUser){
-          dbUser= await User.create({
-            name:user.name,
-            email:user.email,
-            image:user.image,
-            
-          })
-        
-        user.id=dbUser._id.toString();
-         user.role = dbUser.role; 
-        
+    async signIn({ user, account }) {
+      if (account?.provider == "google") {
+        try {
+          await connectDb();
+          let dbUser = await User.findOne({ email: user.email });
+          if (!dbUser) {
+            dbUser = await User.create({
+              name: user.name,
+              email: user.email,
+              image: user.image,
+            });
+          }
+          user.id = dbUser._id.toString();
+          user.role = dbUser.role;
+          return true;
+        } catch (error) {
+          console.error("CRITICAL: Database error in Google signIn callback:", error);
+          return false; // This will trigger the AccessDenied page
         }
-
       }
       return true;
     },
