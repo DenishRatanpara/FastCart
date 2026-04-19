@@ -2,7 +2,8 @@ import type { NextConfig } from "next";
 import { hostname } from "os";
 
 const nextConfig: NextConfig = {
- images:{
+  serverExternalPackages: ["mongoose"],
+  images: {
   remotePatterns:[
 {hostname:"lh3.googleusercontent.com"},
 

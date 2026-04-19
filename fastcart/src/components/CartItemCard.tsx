@@ -1,26 +1,13 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import mongoose from 'mongoose'
+import React, { useState } from 'react'
 import Image from 'next/image'
 import { motion } from "motion/react"
 import { Minus, Plus, ShoppingCart } from 'lucide-react'
 import { AppDispatch } from '@/store/redux'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, decrementQuantity, incremetnQuantity } from '@/store/cartSlice'
-import { PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '@/store/redux'
-import { getSocket } from '@/app/lib/socket'
-
-interface IGrocery {
-  _id: mongoose.Types.ObjectId
-  name: string
-  category: string
-  price: string
-  unit: string
-  image: string
-  createdAt?: Date
-  updatedAt?: Date
-}
+import { IGrocery } from '@/app/types/models'
 
 const CartItemCard = ({ item }: { item: IGrocery }) => {
 

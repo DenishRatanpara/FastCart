@@ -3,7 +3,7 @@ import Grocery from "@/app/models/grocery.model";
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await connectDb();
     const session = await auth();

@@ -11,7 +11,7 @@ const ORDER_STATUS = ["pending", "out_for_delivery"];
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { orderId: string } }
+  { params }: { params: Promise<{ orderId: string }> }
 ) {
   try {
     await connectDb();

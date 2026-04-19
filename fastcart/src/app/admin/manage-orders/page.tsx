@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { ArrowLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { IOrder } from '@/app/models/order.model'
+import { IOrder } from '@/app/types/models'
 import AdminOrderCart from '@/components/AdminOrderCart'
 import { getSocket } from '@/app/lib/socket'
 

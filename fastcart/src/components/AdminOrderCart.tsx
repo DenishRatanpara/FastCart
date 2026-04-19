@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {IUser} from "@/app/models/user.model"
+import { IUser, IOrder } from "@/app/types/models";
 
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -15,60 +15,28 @@ import {
   Truck,
 } from "lucide-react";
 import axios from "axios";
-import mongoose from "mongoose";
+
 type UpdateStatusResponse =
   | {
       updated: true;
       message: string;
       status: IOrder["status"];
-      assignment: mongoose.Types.ObjectId | null;
+      assignment: any | null;
       availableDeliveryBoys: any[];
     }
   | {
       updated: false;
       message: string;
       status: IOrder["status"];
-      assignment: mongoose.Types.ObjectId | null;
+      assignment: any | null;
       availableDeliveryBoys: any[];
     };
- interface IOrder extends Document {
-   _id:mongoose.Types.ObjectId  
-  user: mongoose.Types.ObjectId;
-  items: {
-    grocery: mongoose.Types.ObjectId;
-    name: string;
-    price: number;
-    unit: string;
-    image: string;
-    quantity: number;
-  }[];
-  isPaid: boolean;
-  totalAmount: number;
-  paymentMethod: "cod" | "online";
-  address: {
-    fullName: string;
-    mobile: string;
-    city: string;
-    state: string;
-    pincode: number;
-    fullAddress: string;
-    latitude: number;
-    longitude: number;
-  };
-  status: "pending" | "out_for_delivery" ;
-  assignment: mongoose.Types.ObjectId | null;
-  assignedDeliveryBoy: IUser
-  createdAt?: Date;
-  updatedAt?: Date;
-}
 
-const statusOptions: IOrder["status"][] = [
-  "pending",
-  "out_for_delivery",
-];
+const statusOptions: IOrder["status"][] = ["pending", "out_for_delivery"];
 
-const AdminOrderCart = ({ order }: { order: IOrder }) => {
+const AdminOrderCart = ({ order }: { order: any }) => {
   const orderId = order._id?.toString();
+  const assignedDeliveryBoy = order.assignedDeliveryBoy as unknown as IUser | null;
 
   const [openOrder, setOpenOrder] = useState<string | null>(null);
 
@@ -151,15 +119,15 @@ const AdminOrderCart = ({ order }: { order: IOrder }) => {
                    </p>
                 </div>
                 
-                {order.assignedDeliveryBoy && (
+                {assignedDeliveryBoy && (
                   <div className="mt-4 pt-4 border-t border-gray-200">
                      <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Driver Assigned</p>
                      <div className="flex items-center justify-between">
                         <div>
-                           <p className="font-semibold text-gray-800 text-sm">{order.assignedDeliveryBoy.name}</p>
-                           <p className="text-xs text-gray-500 font-mono">+91 {order.assignedDeliveryBoy.mobile}</p>
+                           <p className="font-semibold text-gray-800 text-sm">{assignedDeliveryBoy.name}</p>
+                           <p className="text-xs text-gray-500 font-mono">+91 {assignedDeliveryBoy.mobile}</p>
                         </div>
-                        <a className="bg-indigo-50 hover:bg-indigo-100 text-indigo-600 p-2.5 rounded-full transition-colors border border-indigo-100" href={`tel:${order.assignedDeliveryBoy.mobile}`} title="Call Driver">
+                        <a className="bg-indigo-50 hover:bg-indigo-100 text-indigo-600 p-2.5 rounded-full transition-colors border border-indigo-100" href={`tel:${assignedDeliveryBoy.mobile}`} title="Call Driver">
                            <Phone size={16} className="fill-indigo-600/20" />
                         </a>
                      </div>
@@ -245,7 +213,7 @@ const AdminOrderCart = ({ order }: { order: IOrder }) => {
                   <span>Amount</span>
                </div>
               <div className="p-4 space-y-4">
-                {order.items.map((item, index) => (
+                {order.items.map((item: any, index: number) => (
                   <div
                     key={`${order._id}-${index}`}
                     className="flex justify-between items-center group"

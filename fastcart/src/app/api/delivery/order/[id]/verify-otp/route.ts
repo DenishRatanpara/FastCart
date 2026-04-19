@@ -6,7 +6,7 @@ import emitEventHandler from "@/app/lib/emitEventHandler";
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
     await connectDb();
 

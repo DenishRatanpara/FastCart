@@ -1,20 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import mongoose from "mongoose";
+import { IUser } from "@/app/types/models";
 
-
-interface IUser{
-    _id:mongoose.Types.ObjectId
-    name:string
-    email:string
-    password?:string
-    mobile?:string
-    role:"user" | "deliveryBoy" | "admin"
-    image?:string
-
-
-}
-interface IuserSlice{
-     userData:IUser | null
+interface IuserSlice {
+     userData: IUser | null
 }
 
 const initialState:IuserSlice={

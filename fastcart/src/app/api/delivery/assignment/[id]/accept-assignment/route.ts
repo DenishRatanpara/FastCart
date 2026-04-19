@@ -6,7 +6,7 @@ import User from "@/app/models/user.model";
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req:NextRequest,{params}:{params:{id:string}}){
+export async function GET(req:NextRequest,{params}:{params:Promise<{id:string}>}){
 try {
     await connectDb()
     

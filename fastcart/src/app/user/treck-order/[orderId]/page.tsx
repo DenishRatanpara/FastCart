@@ -1,7 +1,6 @@
 'use client'
 import { RootState } from '@/store/redux';
 import axios from 'axios'
-import mongoose from 'mongoose';
 import { useParams, useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
@@ -10,40 +9,8 @@ import dynamic from "next/dynamic";
 const LiveMap = dynamic(() => import('@/components/LiveMap'), { ssr: false });
 import { getSocket } from '@/app/lib/socket';
 import DeliveryChat from '@/components/DeliveryChat';
-import type { IUser } from '@/app/models/user.model';
+import { IOrder, IUser } from '@/app/types/models';
 import { motion } from "framer-motion";
-
-interface IOrder extends Document {
-    _id:mongoose.Types.ObjectId
-  user: mongoose.Types.ObjectId;
-  items: {
- 
-    grocery: mongoose.Types.ObjectId;
-    name: string;
-    price: number;
-    unit: string;
-    image: string;
-    quantity: number;
-  }[];
-  isPaid: boolean;
-  totalAmount: number;
-  paymentMethod: "cod" | "online";
-  address: {
-    fullName: string;
-    mobile: string;
-    city: string;
-    state: string;
-    pincode: number;
-    fullAddress: string;
-    latitude: number;
-    longitude: number;
-  };
-  status: "pending" | "out_for_delivery" | "delivered";
-  assignedDeliveryBoy: mongoose.Types.ObjectId | null | (IUser & { _id: any });
-  deliveryOtp?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
 
 interface ILocation{
   latitude:number
@@ -55,7 +22,7 @@ const TrackOrder = () => {
   const {orderId}=useParams()
   const router=useRouter()
 
-  const [order,setOrder]=useState<IOrder>()
+  const [order,setOrder]=useState<any>()
   const [userLocation,setUserLocation]=useState<ILocation>({
       latitude:0,
       longitude:0
@@ -124,7 +91,7 @@ const TrackOrder = () => {
 
     const onOrderStatusUpdate=(data:any)=>{
       if (String(data?.orderId) !== String(orderId)) return;
-      setOrder((prev)=> prev ? ({...prev, status: data.status}) : prev)
+      setOrder((prev:any)=> prev ? ({...prev, status: data.status}) : prev)
     }
 
     socket.on("update-deliveryBoy-location", onLocation)

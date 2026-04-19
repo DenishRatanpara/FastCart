@@ -1,6 +1,5 @@
 "use client"
 import { getSocket } from '@/app/lib/socket'
-import { error } from 'console'
 import React, { useEffect } from 'react'
 
 const GeoUpdater = ({userId}:{userId:string}) => {

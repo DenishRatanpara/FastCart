@@ -1,12 +1,10 @@
 "use client";
 import { getSocket } from "@/app/lib/socket";
 import axios from "axios";
-import mongoose from "mongoose";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-
 type Props = {
-  orderId: mongoose.Types.ObjectId;
-  senderId: mongoose.Types.ObjectId;
+  orderId: string | any;
+  senderId: string | any;
   title?: string;
 };
 

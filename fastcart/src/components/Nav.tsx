@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import mongoose from "mongoose";
+import { IUser } from "@/app/types/models";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -10,29 +10,17 @@ import {
   Package,
   LogOut,
   X,
-  Plus,
   PlusCircle,
   Boxes,
   ClipboardCheck,
   Menu,
   LayoutDashboard,
 } from "lucide-react";
-import { AnimatePresence, motion, spring } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { signOut } from "next-auth/react";
 import { createPortal } from "react-dom";
-import { sign } from "crypto";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/redux";
-
-interface IUser {
-  _id: mongoose.Types.ObjectId;
-  name: string;
-  email: string;
-  password?: string;
-  mobile?: string;
-  role: "user" | "deliveryBoy" | "admin";
-  image?: string;
-}
 
 const Nav = ({ user }: { user: IUser }) => {
   const { cartData } = useSelector((state: RootState) => state.cart);

@@ -28,6 +28,9 @@ const RecenterMap = ({ position }: { position: LatLngExpression }) => {
 };
 
 const CheckOut = () => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  
   const [paymentMethod, setPaymentMethod] = useState<"online" | "cod">("cod");
   const { userData } = useSelector((state: RootState) => state.user);
   const { subTotal, deliveryFee, finalTotal, cartData } = useSelector((state: RootState) => state.cart);
@@ -121,6 +124,8 @@ const CheckOut = () => {
       if (res.data.length > 0) setPosition([parseFloat(res.data[0].lat), parseFloat(res.data[0].lon)]);
     } catch (err) {} finally { setSearchLoading(false); }
   };
+
+  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-gray-50/50 py-10 px-4 sm:px-6 lg:px-8">

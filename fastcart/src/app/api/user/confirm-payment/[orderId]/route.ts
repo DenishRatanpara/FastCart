@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { orderId: string } }
+  { params }: { params: Promise<{ orderId: string }> }
 ) {
   try {
     await connectDb();

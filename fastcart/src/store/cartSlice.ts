@@ -1,29 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import mongoose from "mongoose";
-
-interface IGrocery{
-    _id:mongoose.Types.ObjectId
-    name:string
-    category:string
-    price:string
-    unit:string
-    quantity:number
-    image:string
-    createdAt?:Date
-    updatedAt?:Date
-   
-
-
-
-}
+import { IGrocery } from "@/app/types/models";
 
 interface IGrocerySlice {
-    cartData:IGrocery[],
-      subTotal:number,
-         
-          deliveryFee:number,
-          finalTotal:number
-
+    cartData: any[],
+    subTotal: number,
+    deliveryFee: number,
+    finalTotal: number
 }
 
 const initialState:IGrocerySlice={
@@ -44,7 +26,7 @@ const cartSlice=createSlice({
             cartSlice.caseReducers.calculateTotal(state)
 
         }),
-        incremetnQuantity:((state,action:PayloadAction<mongoose.Types.ObjectId>)=>{
+        incremetnQuantity:((state,action:PayloadAction<any>)=>{
             const item=state.cartData.find(i=>i._id==action.payload)
             if(item){
                 item.quantity=item.quantity+1 
@@ -54,7 +36,7 @@ const cartSlice=createSlice({
 
         }),
 
-        decrementQuantity:((state,action:PayloadAction<mongoose.Types.ObjectId>)=>{
+        decrementQuantity:((state,action:PayloadAction<any>)=>{
             const item=state.cartData.find(i=>i._id==action.payload)
             if(!item)
                 return 
@@ -69,7 +51,7 @@ const cartSlice=createSlice({
              cartSlice.caseReducers.calculateTotal(state)
 
         }),
-        removeCartItem:((state,action:PayloadAction<mongoose.Types.ObjectId>)=>{
+        removeCartItem:((state,action:PayloadAction<any>)=>{
           
                       state.cartData=state.cartData.filter(i=>i._id !== action.payload)
             
