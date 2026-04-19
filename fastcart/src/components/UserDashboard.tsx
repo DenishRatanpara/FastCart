@@ -1,8 +1,8 @@
 import React from 'react'
 import HeroSection from './HeroSection'
 import CategorySlider from './CategorySlider'
-import mongoose from 'mongoose'
 import Grocery from '@/app/models/grocery.model'
+import { IGrocery } from '@/app/types/models'
 import connectDb from '@/app/lib/db'
 import GroceryLiveGrid from './GroceryLiveGrid'
 

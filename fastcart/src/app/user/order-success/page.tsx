@@ -14,6 +14,14 @@ import { useDispatch } from "react-redux";
 import { clearCart } from "@/store/cartSlice";
 
 const OrderSuccess = () => {
+  return (
+    <React.Suspense fallback={<div>Loading...</div>}>
+      <OrderSuccessContent />
+    </React.Suspense>
+  );
+};
+
+const OrderSuccessContent = () => {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("orderId");
   const [confirming, setConfirming] = useState<boolean>(!!orderId);

@@ -1,10 +1,9 @@
-import { error } from "console";
-import mongoose  from "mongoose";
+import mongoose from "mongoose";
 
-const mongouri=process.env.MONGO_URI;
+const mongouri = process.env.MONGO_URI;
 
-if(!mongouri){
-    throw error ("Mongo uri not found")
+if (!mongouri) {
+    throw new Error("Mongo uri not found");
 }
 
 let cached=global.mongoose
