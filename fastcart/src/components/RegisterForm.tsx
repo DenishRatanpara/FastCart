@@ -164,7 +164,7 @@ const RegisterForm = ({ nextPrev }: PropsType) => {
 
           {/* Google Auth */}
           <motion.button
-          onClick={()=>signIn("google")}
+          onClick={()=>signIn("google", { callbackUrl: process.env.NEXT_PUBLIC_BASE_URL || "/" })}
             whileTap={{ scale: 0.92 }}
             whileHover={{ scale: 1.03 }}
             className="w-full flex items-center justify-center gap-3 border border-gray-300 py-3 rounded-xl font-semibold bg-white hover:bg-gray-50 transition shadow-sm"
